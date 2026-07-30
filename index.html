@@ -358,7 +358,7 @@ footer{border-top:1px solid var(--line);padding:70px 0 40px;background:var(--bla
       <a href="#services">Services</a>
       <a href="#process">Process</a>
       <a href="#who">Who we work with</a>
-      <a href="#contact" class="nav-cta">Start a project</a>
+      <a href="https://calendly.com/fwdly" class="nav-cta js-calendly">Book a call</a>
     </div>
   </div>
 </nav>
@@ -383,7 +383,7 @@ footer{border-top:1px solid var(--line);padding:70px 0 40px;background:var(--bla
     <h1>Your brand,<br>moving <span class="grad-text">forward.</span></h1>
     <p class="lead">FWDLY plans, shoots, edits and distributes the content your audience actually watches — from cinematic brand films to scroll-stopping social, backed by ad campaigns that turn views into customers.</p>
     <div class="btn-row">
-      <a href="#contact" class="btn btn-primary">Start a project</a>
+      <a href="https://calendly.com/fwdly" class="btn btn-primary js-calendly">Book a call</a>
       <a href="#services" class="btn btn-ghost">See what we do</a>
     </div>
   </div>
@@ -515,8 +515,8 @@ footer{border-top:1px solid var(--line);padding:70px 0 40px;background:var(--bla
 <div class="cta-band" id="contact">
   <span class="eyebrow reveal">Let's talk</span>
   <h2 class="reveal">Ready to move <span class="grad-text">forward?</span></h2>
-  <p class="reveal">Tell us about your brand and what you're trying to grow. We'll come back with ideas within two business days.</p>
-  <a href="mailto:hello@fwdly.com" class="btn btn-primary reveal">hello@fwdly.com</a>
+  <p class="reveal">Pick a time that works for you — we'll talk through your brand, your goals, and what we'd make together.</p>
+  <a href="https://calendly.com/fwdly" class="btn btn-primary js-calendly reveal">Book a call</a>
 </div>
 
 <footer>
@@ -534,7 +534,7 @@ footer{border-top:1px solid var(--line);padding:70px 0 40px;background:var(--bla
       </div>
       <div class="foot-col">
         <h4>Connect</h4>
-        <a href="mailto:hello@fwdly.com">hello@fwdly.com</a>
+        <a href="https://calendly.com/fwdly" class="js-calendly">Book a call</a>
         <a href="#" aria-disabled="true">Instagram</a>
         <a href="#" aria-disabled="true">YouTube</a>
       </div>
@@ -547,6 +547,33 @@ footer{border-top:1px solid var(--line);padding:70px 0 40px;background:var(--bla
 </footer>
 
 <script>
+(function(){
+  var CAL_URL='https://calendly.com/fwdly';
+  var loaded=false,loading=false;
+  function loadCalendly(cb){
+    if(loaded){cb();return}
+    if(loading)return;
+    loading=true;
+    var css=document.createElement('link');
+    css.rel='stylesheet';
+    css.href='https://assets.calendly.com/assets/external/widget.css';
+    document.head.appendChild(css);
+    var s=document.createElement('script');
+    s.src='https://assets.calendly.com/assets/external/widget.js';
+    s.onload=function(){loaded=true;loading=false;cb()};
+    s.onerror=function(){loading=false;window.open(CAL_URL,'_blank','noopener')};
+    document.head.appendChild(s);
+  }
+  document.querySelectorAll('.js-calendly').forEach(function(el){
+    el.addEventListener('click',function(e){
+      e.preventDefault();
+      loadCalendly(function(){
+        if(window.Calendly){Calendly.initPopupWidget({url:CAL_URL})}
+        else{window.open(CAL_URL,'_blank','noopener')}
+      });
+    });
+  });
+})();
 (function(){
   var reel=document.getElementById('reelVideo');
   var overlay=document.getElementById('reelOverlay');
